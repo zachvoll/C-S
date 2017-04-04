@@ -96,6 +96,9 @@ def client():
 		content = myfile.read()
 		myfile.close()
 
+	succ = 0
+	maxwait = sys.maxint
+
 	seqno = 0
 	sendpacket = createPacket(seqno, False, inputfile, False)
 	#deliver file name
@@ -112,11 +115,22 @@ def client():
 			#check what the packet is
 			case,data,seq = checkPacket(recvpacket, seqno, True)
 			if(case == "ack"):
-				pktdel = True
+				seq = int(data)
+				if(seq == seqno):
+					pktdel = True
+
+					if(timeout < maxwait):
+						maxwait = timeout
+
+					succ += 1
+					if(succ > 3):
+						succ = 0
+						timeout -= 0.5
 
 		else:
-			#double wait time, retransmit
-			timeout *= 2.0
+			#add half a second to timeout, retransmit
+			if(timeout < maxwait):
+				timeout += 0.5
 			print("Timeout! Retransmitting...")
 
 	#update sequence number
@@ -155,9 +169,18 @@ def client():
 					if(seq == seqno):
 						pktdel = True
 
+						if(timeout < maxwait):
+							maxwait = timeout
+
+						succ += 1
+						if(succ > 3):
+							succ = 0
+							timeout -= 0.5
+
 			else:
-				#double wait time, retransmit
-				timeout *= 2.0
+				#increase wait time, retransmit
+				if(timeout < maxwait):
+					timeout += 0.5
 				print("Timeout! Retransmitting...")
 
 		#update sequence number
@@ -203,7 +226,6 @@ def server():
 
 	#get packets and write them to file
 	lastpkt = False
-
 	while not lastpkt:
 		recvpacket = sSock.recv(512).decode()
 		case,data,seq = checkPacket(recvpacket, seqno, False)
@@ -227,16 +249,9 @@ def server():
 			seqno += 1
 			lastpkt = True
 
-		else:
-			pass
-
-	#close file
 	myfile.close()
-
-	#close socket
 	sSock.shutdown()
 	sSock.close()
-
 
 def main():
 	global host,port,inputfile
