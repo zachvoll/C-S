@@ -1,23 +1,21 @@
 What it does:
+single file transfer from server to client over network layer using fixed length packets.
+network layer has a chance to drop or mangle packets.
+Timers and 40 byte checksum are used to handle packet issues.
 
 how to run layer:
 python networkLayer.py port maxNoPackets delay probDrop probMangle
-
 port int, maxNoPackets int, delay float, probDrop int, probMangle int 
-
-example: python networkLayer.py 5002 100 1.0 0 0
+e.g. python networkLayer.py 5002 100 1.0 0 0
 
 how to run server:
-python3 client.py host port
-
-example: python cands.py "localhost" 5002
+python cands.py host port
+e.g. python cands.py "localhost" 5002
+note: port must be the same as networkLayer port
 
 how to run client:
 python cands.py host port inputfile
-
-example: python cands.py "localhost" 5001 "sample.txt"
+e.g. python cands.py "localhost" 5001 "sample.txt"
 
 notes:
-server+client handles one file then closes
-40 byte checksum
 largest file that can be handled is 119,085 bytes since 467 bytes of data in packet and 255 unique sequence numbers for data and 1 for file name. 

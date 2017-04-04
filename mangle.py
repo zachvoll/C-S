@@ -1,11 +1,15 @@
+#Author: ???
+
 import sys, random, time
+
 
 def main():
 	packet = ""
 	for i in range(512):
 		packet += "a" # Make a packet.
 	while 1:
-		mangledpacket = replace(packet, 2, 20, 20) # The first parameter is the packet. The second is the delay. The third and fourth are probabilities for dropping and mangling.
+                # The first parameter is the packet. The second is the delay. The third and fourth are probabilities for dropping and mangling.
+		mangledpacket = replace(packet, 2, 20, 20) 
 		print(mangledpacket);
 
 def replace(s, delay, drop, mangle):

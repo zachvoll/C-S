@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-import os, sys, time, socket, threading, random #, hashlib
+#Author: ???
+
+import os, sys, time, socket, threading, random
 
 PORT,MAXBLOCKS,DELAY = int(sys.argv[1]),int(sys.argv[2]),float(sys.argv[3])
 PROB_DEL,PROB_MANGLING = int(sys.argv[4]),int(sys.argv[5])
@@ -124,8 +126,6 @@ def networkLayerWriter(writer, cxOther):
                         for i in range(1,random.randint(1,len(b))): # grab a random number of bytes
                             b = replaceChar(b, i*random.randint(1,1024) % len(b))
                     print("Writing block b[%d], of size len(b) =%d"%(r,len(b)))
-                    # Please uncomment the next line if you are using this program with your Java Program.
-                    # b = b + "\n"
                     writer.send(b.encode())
                     del b
                     print("Sent b[%d] successfully"%r)
