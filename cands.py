@@ -268,6 +268,6 @@ def main():
 		host,port = str(sys.argv[1]),int(sys.argv[2])
 		server()
 	else:
-		print("incorrect arguments, usage: host port [inputfile]")
+		print("incorrect arguments, usage: <host> <port> <inputfile>")
 
 main()

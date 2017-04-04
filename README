@@ -1,22 +1,21 @@
-name: Zachary Vollen
-x500: voll0139
+What it does:
 
 how to run layer:
-python3 networkLayer.py port maxNoPackets delay probDrop probMangle
+python networkLayer.py port maxNoPackets delay probDrop probMangle
 
 port int, maxNoPackets int, delay float, probDrop int, probMangle int 
 
-example: python3 networkLayer.py 5002 100 1.0 0 0
+example: python networkLayer.py 5002 100 1.0 0 0
 
 how to run server:
 python3 client.py host port
 
-example: python3 client.py "localhost" 5002
+example: python cands.py "localhost" 5002
 
 how to run client:
-python3 client.py host port inputfile
+python cands.py host port inputfile
 
-example: python3 client.py "localhost" 5001
+example: python cands.py "localhost" 5001 "sample.txt"
 
 notes:
 server+client handles one file then closes
