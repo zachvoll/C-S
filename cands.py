@@ -122,11 +122,6 @@ def client():
 					if(timeout < maxwait):
 						maxwait = timeout
 
-					succ += 1
-					if(succ > 3):
-						succ = 0
-						timeout -= 0.5
-
 		else:
 			#add half a second to timeout, retransmit
 			if(timeout < maxwait):
@@ -135,6 +130,7 @@ def client():
 
 	#update sequence number
 	seqno = 1
+	succ += 1
 
 	lastpacket = False
 	while not lastpacket:
